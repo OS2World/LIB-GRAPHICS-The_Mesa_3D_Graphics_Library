@@ -1,0 +1,866 @@
+# Makefile
+# Created by IBM WorkFrame/2 MakeMake at 13:24:49 on 13 Dec 2002
+#
+# The actions included in this make file are:
+#  Compile::C++ Compiler
+#  Lib::Library Tool
+
+.SUFFIXES:
+
+.SUFFIXES: \
+    .cpp .obj 
+
+.cpp.obj:
+    @echo " Compile::C++ Compiler "
+    icc.exe /I..\ /I..\X86 /I..\GL /Ss /Wcmpcndcnscnvcpydclenuextgengnrgotinilanobsordparporprorearettrdtruunduniuse /Tx /Ti /Gm /G5 /Gf /Gi /Oi /C %s
+
+{G:\EVGEN\MESA5\swrast}.cpp.obj:
+    @echo " Compile::C++ Compiler "
+    icc.exe /I..\ /I..\X86 /I..\GL /Ss /Wcmpcndcnscnvcpydclenuextgengnrgotinilanobsordparporprorearettrdtruunduniuse /Tx /Ti /Gm /G5 /Gf /Gi /Oi /C %s
+
+all: \
+    .\SwRast.lib
+
+.\SwRast.lib: \
+    .\s_triangle.obj \
+    .\s_texture.obj \
+    .\s_zoom.obj \
+    .\s_aaline.obj \
+    .\s_aatriangle.obj \
+    .\s_aatriangle_1.obj \
+    .\s_accum.obj \
+    .\s_alpha.obj \
+    .\s_alphabuf.obj \
+    .\s_bitmap.obj \
+    .\s_blend.obj \
+    .\s_buffers.obj \
+    .\s_context.obj \
+    .\s_copypix.obj \
+    .\s_depth.obj \
+    .\s_drawpix.obj \
+    .\s_feedback.obj \
+    .\s_fog.obj \
+    .\s_histogram.obj \
+    .\s_imaging.obj \
+    .\s_lines.obj \
+    .\s_logic.obj \
+    .\s_masking.obj \
+    .\s_pixeltex.obj \
+    .\s_points.obj \
+    .\s_readpix.obj \
+    .\s_span.obj \
+    .\s_stencil.obj \
+    .\s_texstore.obj
+    @echo " Lib::Library Tool "
+    ilib.exe  /nol /noi SwRast.lib @Makefile.rf;
+
+.\s_triangle.obj: \
+    G:\EVGEN\MESA5\swrast\s_triangle.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}macros.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}colormac.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_span.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mmath.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_aatriangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapi.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_depth.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_triangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_feedback.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}texstate.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}texformat.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}teximage.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_tritemp.h
+
+.\s_texture.obj: \
+    G:\EVGEN\MESA5\swrast\s_texture.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}macros.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}colormac.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mmath.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapi.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_texture.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}texformat.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}teximage.h
+
+.\s_texstore.obj: \
+    G:\EVGEN\MESA5\swrast\s_texstore.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}macros.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}colormac.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_span.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mmath.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapi.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}image.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_depth.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}convolve.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}texformat.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}teximage.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}texstore.h
+
+.\s_stencil.obj: \
+    G:\EVGEN\MESA5\swrast\s_stencil.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}macros.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_stencil.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapi.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_depth.h
+
+.\s_span.obj: \
+    G:\EVGEN\MESA5\swrast\s_span.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}macros.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}colormac.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_span.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_stencil.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mmath.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_alphabuf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_masking.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapi.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_alpha.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_blend.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_depth.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_texture.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_fog.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_logic.h
+
+.\s_readpix.obj: \
+    G:\EVGEN\MESA5\swrast\s_readpix.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}macros.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}colormac.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_span.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_stencil.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mmath.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_alphabuf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapi.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}image.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}pixel.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_depth.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}convolve.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}feedback.h
+
+.\s_points.obj: \
+    G:\EVGEN\MESA5\swrast\s_points.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}macros.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}colormac.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_span.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mmath.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapi.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_points.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_feedback.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}texstate.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_pointtemp.h
+
+.\s_pixeltex.obj: \
+    G:\EVGEN\MESA5\swrast\s_pixeltex.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}macros.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}colormac.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mmath.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_texture.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_pixeltex.h
+
+.\s_masking.obj: \
+    G:\EVGEN\MESA5\swrast\s_masking.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}macros.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_span.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_alphabuf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_masking.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}enums.h
+
+.\s_logic.obj: \
+    G:\EVGEN\MESA5\swrast\s_logic.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}macros.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_span.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_alphabuf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapi.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_logic.h
+
+.\s_lines.obj: \
+    G:\EVGEN\MESA5\swrast\s_lines.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}macros.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}colormac.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_span.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mmath.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast/s_aaline.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_depth.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_lines.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_feedback.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_linetemp.h
+
+.\s_imaging.obj: \
+    G:\EVGEN\MESA5\swrast\s_imaging.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_span.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h
+
+.\s_histogram.obj: \
+    G:\EVGEN\MESA5\swrast\s_histogram.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}macros.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}colormac.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_span.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mmath.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}image.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_histogram.h
+
+.\s_fog.obj: \
+    G:\EVGEN\MESA5\swrast\s_fog.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}macros.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}colormac.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_span.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mmath.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapi.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_fog.h
+
+.\s_feedback.obj: \
+    G:\EVGEN\MESA5\swrast\s_feedback.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}macros.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}colormac.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mmath.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapi.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_triangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}feedback.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}enums.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_feedback.h
+
+.\s_drawpix.obj: \
+    G:\EVGEN\MESA5\swrast\s_drawpix.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}macros.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}colormac.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_span.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_stencil.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_zoom.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mmath.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapi.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}image.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}pixel.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_texture.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}convolve.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_pixeltex.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_drawpix.h
+
+.\s_depth.obj: \
+    G:\EVGEN\MESA5\swrast\s_depth.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}macros.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapi.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_depth.h
+
+.\s_copypix.obj: \
+    G:\EVGEN\MESA5\swrast\s_copypix.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}macros.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}colormac.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_span.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_stencil.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_zoom.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mmath.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapi.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}pixel.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_depth.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_texture.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}convolve.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}feedback.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_histogram.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_pixeltex.h
+
+.\s_context.obj: \
+    G:\EVGEN\MESA5\swrast\s_context.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_span.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapi.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_blend.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_lines.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_points.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_triangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_texture.h
+
+.\s_buffers.obj: \
+    G:\EVGEN\MESA5\swrast\s_buffers.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}macros.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}colormac.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_stencil.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mmath.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_accum.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_alphabuf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_masking.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_depth.h
+
+.\s_blend.obj: \
+    G:\EVGEN\MESA5\swrast\s_blend.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}macros.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}colormac.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_span.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mmath.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_alphabuf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapi.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_blend.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}X86/mmx.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}X86/common_x86_asm.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}common_x86_features.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}x86.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}3dnow.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}sse.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_xform.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_vector.h
+
+.\s_bitmap.obj: \
+    G:\EVGEN\MESA5\swrast\s_bitmap.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}macros.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_span.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mmath.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}image.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}pixel.h
+
+.\s_alphabuf.obj: \
+    G:\EVGEN\MESA5\swrast\s_alphabuf.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}macros.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}colormac.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mmath.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_alphabuf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapi.h
+
+.\s_alpha.obj: \
+    G:\EVGEN\MESA5\swrast\s_alpha.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}macros.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}colormac.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mmath.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapi.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_alpha.h
+
+.\s_accum.obj: \
+    G:\EVGEN\MESA5\swrast\s_accum.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}macros.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_span.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mmath.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_accum.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_alphabuf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_masking.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapi.h
+
+.\s_aatriangle_1.obj: \
+    G:\EVGEN\MESA5\swrast\s_aatriangle_1.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}macros.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_span.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mmath.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_aatriangle.h
+
+.\s_aatriangle.obj: \
+    G:\EVGEN\MESA5\swrast\s_aatriangle.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}macros.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_span.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mmath.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_aatriangle.h
+
+.\s_aaline.obj: \
+    G:\EVGEN\MESA5\swrast\s_aaline.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_span.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mmath.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast/s_aaline.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_aalinetemp.h
+
+.\s_zoom.obj: \
+    G:\EVGEN\MESA5\swrast\s_zoom.cpp \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glheader.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}macros.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}imports.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}colormac.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_span.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_stencil.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}s_zoom.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}conf.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/gl.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/glext.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}config.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mmath.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}mtypes.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}swrast.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}gl_mangle.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}GL/os2_x11.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glapitable.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}glthread.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}math/m_matrix.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Trace/tr_context.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}dd.h \
+    {G:\EVGEN\MESA5\swrast;..\;..\X86;..\GL;$(INCLUDE);}Xthreads.h

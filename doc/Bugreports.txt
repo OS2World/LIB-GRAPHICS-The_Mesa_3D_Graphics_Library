@@ -1,0 +1,9 @@
+1. APIENTRY and GLUTAPIENTRY
+
+\Mesa\include\GL\glut.h has
+GLUTAPI void GLUTAPIENTRY glutSetWindowTitle(const char *title);
+while
+\Mesa\src-glut\glut_winmisc.c
+has
+void APIENTRY 
+glutSetWindowTitle(const char *title)
