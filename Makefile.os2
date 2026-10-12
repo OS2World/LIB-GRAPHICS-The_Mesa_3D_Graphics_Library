@@ -1,0 +1,473 @@
+# Makefile.os2 — build Mesa 7.11.2 classic swrast + OS/2 PM driver
+#
+# Run from the Mesa-7.11.2 root with:
+#   make -f Makefile.os2
+#
+# Requires: GCC 9.2 (via ArcaOS ANPM), OS/2 Toolkit headers
+#
+# Outputs (relative to Mesa root):
+#   obj_os2/*.o        — OMF object files
+#   lib/MesaGL7.a      — static Mesa library (link against this)
+#   dll/MesaGL7.dll    — OS/2 DLL
+
+TOP = .
+
+MESA_SRC    = $(TOP)/src/mesa
+GLSL_SRC    = $(TOP)/src/glsl
+INCLUDE     = $(TOP)/include
+OS2_DRIVER  = $(MESA_SRC)/drivers/os2
+OS2_COMPAT  = $(OS2_DRIVER)/os2_compat
+
+CC   = gcc
+CXX  = g++
+AR   = ar
+ARFLAGS = rcs
+
+# OS/2 Toolkit include path — adjust if your toolkit is elsewhere
+OS2TK = /usr/include
+
+CFLAGS = -O2 -Wall -fno-builtin-sinf -fno-builtin-cosf -fno-builtin-sin -fno-builtin-cos -Zomf \
+         -D__OS2__ -DBUILD_GL32 \
+         -D_near= -D_far= -D_cdecl= -D_huge= -D_pascal= \
+         -I$(OS2_COMPAT) \
+         -I$(INCLUDE) \
+         -I$(MESA_SRC) \
+         -I$(MESA_SRC)/main \
+         -I$(GLSL_SRC) \
+         -I$(TOP)/src/mapi \
+         -I$(OS2TK)
+
+CXXFLAGS = $(CFLAGS) -fpermissive
+
+# ---------------------------------------------------------------------------
+# Source file lists
+# ---------------------------------------------------------------------------
+
+# OS/2 platform driver
+OS2_SRCS = \
+    $(OS2_DRIVER)/os2mesa.c \
+    $(OS2_DRIVER)/os2mesa_math.c
+
+# Mesa core — main/
+MAIN_SRCS = \
+    $(MESA_SRC)/main/accum.c \
+    $(MESA_SRC)/main/arbprogram.c \
+    $(MESA_SRC)/main/api_arrayelt.c \
+    $(MESA_SRC)/main/api_exec.c \
+    $(MESA_SRC)/main/api_loopback.c \
+    $(MESA_SRC)/main/api_noop.c \
+    $(MESA_SRC)/main/api_validate.c \
+    $(MESA_SRC)/main/arrayobj.c \
+    $(MESA_SRC)/main/atifragshader.c \
+    $(MESA_SRC)/main/attrib.c \
+    $(MESA_SRC)/main/blend.c \
+    $(MESA_SRC)/main/bufferobj.c \
+    $(MESA_SRC)/main/buffers.c \
+    $(MESA_SRC)/main/clear.c \
+    $(MESA_SRC)/main/clip.c \
+    $(MESA_SRC)/main/colortab.c \
+    $(MESA_SRC)/main/condrender.c \
+    $(MESA_SRC)/main/context.c \
+    $(MESA_SRC)/main/convolve.c \
+    $(MESA_SRC)/main/cpuinfo.c \
+    $(MESA_SRC)/main/debug.c \
+    $(MESA_SRC)/main/depth.c \
+    $(MESA_SRC)/main/depthstencil.c \
+    $(MESA_SRC)/main/dlist.c \
+    $(MESA_SRC)/main/dlopen.c \
+    $(MESA_SRC)/main/drawpix.c \
+    $(MESA_SRC)/main/enable.c \
+    $(MESA_SRC)/main/enums.c \
+    $(MESA_SRC)/main/eval.c \
+    $(MESA_SRC)/main/execmem.c \
+    $(MESA_SRC)/main/extensions.c \
+    $(MESA_SRC)/main/fbobject.c \
+    $(MESA_SRC)/main/feedback.c \
+    $(MESA_SRC)/main/fog.c \
+    $(MESA_SRC)/main/framebuffer.c \
+    $(MESA_SRC)/main/get.c \
+    $(MESA_SRC)/main/getstring.c \
+    $(MESA_SRC)/main/hash.c \
+    $(MESA_SRC)/main/hint.c \
+    $(MESA_SRC)/main/histogram.c \
+    $(MESA_SRC)/main/image.c \
+    $(MESA_SRC)/main/imports.c \
+    $(MESA_SRC)/main/light.c \
+    $(MESA_SRC)/main/lines.c \
+    $(MESA_SRC)/main/matrix.c \
+    $(MESA_SRC)/main/mipmap.c \
+    $(MESA_SRC)/main/mm.c \
+    $(MESA_SRC)/main/multisample.c \
+    $(MESA_SRC)/main/ffvertex_prog.c \
+    $(MESA_SRC)/main/formats.c \
+    $(MESA_SRC)/main/nvprogram.c \
+    $(MESA_SRC)/main/pack.c \
+    $(MESA_SRC)/main/pbo.c \
+    $(MESA_SRC)/main/pixel.c \
+    $(MESA_SRC)/main/pixelstore.c \
+    $(MESA_SRC)/main/pixeltransfer.c \
+    $(MESA_SRC)/main/points.c \
+    $(MESA_SRC)/main/polygon.c \
+    $(MESA_SRC)/main/querymatrix.c \
+    $(MESA_SRC)/main/queryobj.c \
+    $(MESA_SRC)/main/rastpos.c \
+    $(MESA_SRC)/main/readpix.c \
+    $(MESA_SRC)/main/remap.c \
+    $(MESA_SRC)/main/renderbuffer.c \
+    $(MESA_SRC)/main/samplerobj.c \
+    $(MESA_SRC)/main/scissor.c \
+    $(MESA_SRC)/main/shaderapi.c \
+    $(MESA_SRC)/main/shaderobj.c \
+    $(MESA_SRC)/main/shared.c \
+    $(MESA_SRC)/main/state.c \
+    $(MESA_SRC)/main/stencil.c \
+    $(MESA_SRC)/main/syncobj.c \
+    $(MESA_SRC)/main/texcompress.c \
+    $(MESA_SRC)/main/texcompress_fxt1.c \
+    $(MESA_SRC)/main/texcompress_rgtc.c \
+    $(MESA_SRC)/main/texcompress_s3tc.c \
+    $(MESA_SRC)/main/texenv.c \
+    $(MESA_SRC)/main/texfetch.c \
+    $(MESA_SRC)/main/texformat.c \
+    $(MESA_SRC)/main/texgen.c \
+    $(MESA_SRC)/main/texgetimage.c \
+    $(MESA_SRC)/main/teximage.c \
+    $(MESA_SRC)/main/texobj.c \
+    $(MESA_SRC)/main/texparam.c \
+    $(MESA_SRC)/main/texstate.c \
+    $(MESA_SRC)/main/texstore.c \
+    $(MESA_SRC)/main/texturebarrier.c \
+    $(MESA_SRC)/main/transformfeedback.c \
+    $(MESA_SRC)/main/uniforms.c \
+    $(MESA_SRC)/main/varray.c \
+    $(MESA_SRC)/main/version.c \
+    $(MESA_SRC)/main/viewport.c \
+    $(MESA_SRC)/main/vtxfmt.c
+
+# Math
+MATH_SRCS = \
+    $(MESA_SRC)/math/m_debug_clip.c \
+    $(MESA_SRC)/math/m_debug_norm.c \
+    $(MESA_SRC)/math/m_debug_xform.c \
+    $(MESA_SRC)/math/m_eval.c \
+    $(MESA_SRC)/math/m_matrix.c \
+    $(MESA_SRC)/math/m_translate.c \
+    $(MESA_SRC)/math/m_vector.c \
+    $(MESA_SRC)/math/m_xform.c
+
+# VBO (replaces array_cache from Mesa 5.x)
+VBO_SRCS = \
+    $(MESA_SRC)/vbo/vbo_context.c \
+    $(MESA_SRC)/vbo/vbo_exec.c \
+    $(MESA_SRC)/vbo/vbo_exec_api.c \
+    $(MESA_SRC)/vbo/vbo_exec_eval.c \
+    $(MESA_SRC)/vbo/vbo_exec_array.c \
+    $(MESA_SRC)/vbo/vbo_exec_draw.c \
+    $(MESA_SRC)/vbo/vbo_rebase.c \
+    $(MESA_SRC)/vbo/vbo_save.c \
+    $(MESA_SRC)/vbo/vbo_save_api.c \
+    $(MESA_SRC)/vbo/vbo_save_draw.c \
+    $(MESA_SRC)/vbo/vbo_save_loopback.c \
+    $(MESA_SRC)/vbo/vbo_split.c \
+    $(MESA_SRC)/vbo/vbo_split_copy.c \
+    $(MESA_SRC)/vbo/vbo_split_inplace.c
+
+# TNL (transform & lighting)
+TNL_SRCS = \
+    $(MESA_SRC)/tnl/t_context.c \
+    $(MESA_SRC)/tnl/t_draw.c \
+    $(MESA_SRC)/tnl/t_vp_build.c \
+    $(MESA_SRC)/tnl/t_pipeline.c \
+    $(MESA_SRC)/tnl/t_rasterpos.c \
+    $(MESA_SRC)/tnl/t_vertex.c \
+    $(MESA_SRC)/tnl/t_vertex_generic.c \
+    $(MESA_SRC)/tnl/t_vb_fog.c \
+    $(MESA_SRC)/tnl/t_vb_light.c \
+    $(MESA_SRC)/tnl/t_vb_normals.c \
+    $(MESA_SRC)/tnl/t_vb_points.c \
+    $(MESA_SRC)/tnl/t_vb_program.c \
+    $(MESA_SRC)/tnl/t_vb_render.c \
+    $(MESA_SRC)/tnl/t_vb_texgen.c \
+    $(MESA_SRC)/tnl/t_vb_texmat.c \
+    $(MESA_SRC)/tnl/t_vb_vertex.c
+
+# swrast_setup
+SWSETUP_SRCS = \
+    $(MESA_SRC)/swrast_setup/ss_context.c \
+    $(MESA_SRC)/swrast_setup/ss_triangle.c
+
+# swrast
+SWRAST_SRCS = \
+    $(MESA_SRC)/swrast/s_aaline.c \
+    $(MESA_SRC)/swrast/s_aatriangle.c \
+    $(MESA_SRC)/swrast/s_accum.c \
+    $(MESA_SRC)/swrast/s_texrender.c \
+    $(MESA_SRC)/swrast/s_alpha.c \
+    $(MESA_SRC)/swrast/s_atifragshader.c \
+    $(MESA_SRC)/swrast/s_bitmap.c \
+    $(MESA_SRC)/swrast/s_blend.c \
+    $(MESA_SRC)/swrast/s_blit.c \
+    $(MESA_SRC)/swrast/s_clear.c \
+    $(MESA_SRC)/swrast/s_context.c \
+    $(MESA_SRC)/swrast/s_copypix.c \
+    $(MESA_SRC)/swrast/s_depth.c \
+    $(MESA_SRC)/swrast/s_drawpix.c \
+    $(MESA_SRC)/swrast/s_feedback.c \
+    $(MESA_SRC)/swrast/s_fog.c \
+    $(MESA_SRC)/swrast/s_fragprog.c \
+    $(MESA_SRC)/swrast/s_lines.c \
+    $(MESA_SRC)/swrast/s_logic.c \
+    $(MESA_SRC)/swrast/s_masking.c \
+    $(MESA_SRC)/swrast/s_points.c \
+    $(MESA_SRC)/swrast/s_readpix.c \
+    $(MESA_SRC)/swrast/s_span.c \
+    $(MESA_SRC)/swrast/s_stencil.c \
+    $(MESA_SRC)/swrast/s_texcombine.c \
+    $(MESA_SRC)/swrast/s_texfilter.c \
+    $(MESA_SRC)/swrast/s_triangle.c \
+    $(MESA_SRC)/swrast/s_zoom.c
+
+# Common driver helpers
+COMMON_SRCS = \
+    $(MESA_SRC)/drivers/common/driverfuncs.c \
+    $(MESA_SRC)/drivers/common/meta.c
+
+# GLSL compiler (needed even for fixed-function path in Mesa 7.x)
+GLSL_SRCS = \
+    $(GLSL_SRC)/ast_expr.cpp \
+    $(GLSL_SRC)/ast_function.cpp \
+    $(GLSL_SRC)/ast_to_hir.cpp \
+    $(GLSL_SRC)/ast_type.cpp \
+    $(GLSL_SRC)/builtin_stubs.cpp \
+    $(GLSL_SRC)/glsl_lexer.cpp \
+    $(GLSL_SRC)/glsl_parser.cpp \
+    $(GLSL_SRC)/glsl_parser_extras.cpp \
+    $(GLSL_SRC)/glsl_symbol_table.cpp \
+    $(GLSL_SRC)/glsl_types.cpp \
+    $(GLSL_SRC)/hir_field_selection.cpp \
+    $(GLSL_SRC)/ir.cpp \
+    $(GLSL_SRC)/ir_basic_block.cpp \
+    $(GLSL_SRC)/ir_clone.cpp \
+    $(GLSL_SRC)/ir_constant_expression.cpp \
+    $(GLSL_SRC)/ir_expression_flattening.cpp \
+    $(GLSL_SRC)/ir_function.cpp \
+    $(GLSL_SRC)/ir_function_can_inline.cpp \
+    $(GLSL_SRC)/ir_hierarchical_visitor.cpp \
+    $(GLSL_SRC)/ir_hv_accept.cpp \
+    $(GLSL_SRC)/ir_import_prototypes.cpp \
+    $(GLSL_SRC)/ir_print_visitor.cpp \
+    $(GLSL_SRC)/ir_reader.cpp \
+    $(GLSL_SRC)/ir_rvalue_visitor.cpp \
+    $(GLSL_SRC)/ir_set_program_inouts.cpp \
+    $(GLSL_SRC)/ir_validate.cpp \
+    $(GLSL_SRC)/ir_function_detect_recursion.cpp \
+    $(GLSL_SRC)/ir_variable.cpp \
+    $(GLSL_SRC)/ir_variable_refcount.cpp \
+    $(GLSL_SRC)/link_functions.cpp \
+    $(GLSL_SRC)/linker.cpp \
+    $(GLSL_SRC)/loop_analysis.cpp \
+    $(GLSL_SRC)/loop_controls.cpp \
+    $(GLSL_SRC)/loop_unroll.cpp \
+    $(GLSL_SRC)/lower_discard.cpp \
+    $(GLSL_SRC)/lower_if_to_cond_assign.cpp \
+    $(GLSL_SRC)/lower_instructions.cpp \
+    $(GLSL_SRC)/lower_jumps.cpp \
+    $(GLSL_SRC)/lower_mat_op_to_vec.cpp \
+    $(GLSL_SRC)/lower_noise.cpp \
+    $(GLSL_SRC)/lower_texture_projection.cpp \
+    $(GLSL_SRC)/lower_variable_index_to_cond_assign.cpp \
+    $(GLSL_SRC)/lower_vec_index_to_cond_assign.cpp \
+    $(GLSL_SRC)/lower_vec_index_to_swizzle.cpp \
+    $(GLSL_SRC)/lower_vector.cpp \
+    $(GLSL_SRC)/opt_algebraic.cpp \
+    $(GLSL_SRC)/opt_constant_folding.cpp \
+    $(GLSL_SRC)/opt_constant_propagation.cpp \
+    $(GLSL_SRC)/opt_constant_variable.cpp \
+    $(GLSL_SRC)/opt_copy_propagation.cpp \
+    $(GLSL_SRC)/opt_copy_propagation_elements.cpp \
+    $(GLSL_SRC)/opt_dead_code.cpp \
+    $(GLSL_SRC)/opt_dead_code_local.cpp \
+    $(GLSL_SRC)/opt_dead_functions.cpp \
+    $(GLSL_SRC)/opt_discard_simplification.cpp \
+    $(GLSL_SRC)/opt_function_inlining.cpp \
+    $(GLSL_SRC)/opt_if_simplification.cpp \
+    $(GLSL_SRC)/opt_noop_swizzle.cpp \
+    $(GLSL_SRC)/opt_redundant_jumps.cpp \
+    $(GLSL_SRC)/opt_structure_splitting.cpp \
+    $(GLSL_SRC)/opt_swizzle_swizzle.cpp \
+    $(GLSL_SRC)/opt_tree_grafting.cpp \
+    $(GLSL_SRC)/s_expression.cpp \
+    $(GLSL_SRC)/ralloc.c \
+    $(GLSL_SRC)/strtod.c
+
+# Program (vertex/fragment programs)
+PROGRAM_SRCS = \
+    $(MESA_SRC)/program/arbprogparse.c \
+    $(MESA_SRC)/program/lex.yy.c \
+    $(MESA_SRC)/program/program_parse.tab.c \
+    $(MESA_SRC)/program/program_parse_extra.c \
+    $(MESA_SRC)/program/hash_table.c \
+    $(MESA_SRC)/program/ir_to_mesa.cpp \
+    $(MESA_SRC)/program/nvfragparse.c \
+    $(MESA_SRC)/program/nvvertparse.c \
+    $(MESA_SRC)/program/prog_cache.c \
+    $(MESA_SRC)/program/prog_execute.c \
+    $(MESA_SRC)/program/prog_instruction.c \
+    $(MESA_SRC)/program/prog_noise.c \
+    $(MESA_SRC)/program/prog_optimize.c \
+    $(MESA_SRC)/program/prog_parameter.c \
+    $(MESA_SRC)/program/prog_parameter_layout.c \
+    $(MESA_SRC)/program/prog_print.c \
+    $(MESA_SRC)/program/prog_statevars.c \
+    $(MESA_SRC)/program/prog_uniform.c \
+    $(MESA_SRC)/program/program.c \
+    $(MESA_SRC)/program/programopt.c \
+    $(MESA_SRC)/program/register_allocate.c \
+    $(MESA_SRC)/program/sampler.cpp \
+    $(MESA_SRC)/program/symbol_table.c
+
+# mapi (GL dispatch table)
+MAPI_SRCS = \
+    $(TOP)/src/mapi/glapi/glapi.c \
+    $(TOP)/src/mapi/glapi/glapi_dispatch.c \
+    $(TOP)/src/mapi/glapi/glapi_entrypoint.c \
+    $(TOP)/src/mapi/glapi/glapi_getproc.c \
+    $(TOP)/src/mapi/glapi/glapi_nop.c
+
+# u_current.c lives in src/mapi/mapi/, not src/mapi/glapi/ — needs its own rule
+MAPI_UCUR_SRC = $(TOP)/src/mapi/mapi/u_current.c
+MAPI_UCUR_OBJ = $(OBJ_DIR)/mapi_u_current.o
+
+# ff_fragment_shader.cpp lives in mesa/main/ but is C++, MAIN_OBJS only handles .c
+FF_FRAG_OBJ = $(OBJ_DIR)/main_ff_fragment_shader.o
+
+# GLSL preprocessor (glcpp/) — subdirectory, needs its own pattern
+GLCPP_SRC = $(GLSL_SRC)/glcpp
+GLCPP_SRCS = \
+    $(GLCPP_SRC)/glcpp-lex.c \
+    $(GLCPP_SRC)/glcpp-parse.c \
+    $(GLCPP_SRC)/pp.c
+GLCPP_OBJS = $(patsubst $(GLCPP_SRC)/%.c,$(OBJ_DIR)/glcpp_%.o,$(GLCPP_SRCS))
+
+# ---------------------------------------------------------------------------
+# Object file derivation
+# ---------------------------------------------------------------------------
+
+OBJ_DIR = obj_os2
+
+OS2_OBJS    = $(OBJ_DIR)/os2mesa.o $(OBJ_DIR)/os2mesa_math.o
+MAIN_OBJS   = $(patsubst $(MESA_SRC)/main/%.c,$(OBJ_DIR)/main_%.o,$(MAIN_SRCS))
+MATH_OBJS   = $(patsubst $(MESA_SRC)/math/%.c,$(OBJ_DIR)/math_%.o,$(MATH_SRCS))
+VBO_OBJS    = $(patsubst $(MESA_SRC)/vbo/%.c,$(OBJ_DIR)/vbo_%.o,$(VBO_SRCS))
+TNL_OBJS    = $(patsubst $(MESA_SRC)/tnl/%.c,$(OBJ_DIR)/tnl_%.o,$(TNL_SRCS))
+SWSETUP_OBJS = $(patsubst $(MESA_SRC)/swrast_setup/%.c,$(OBJ_DIR)/swsetup_%.o,$(SWSETUP_SRCS))
+SWRAST_OBJS = $(patsubst $(MESA_SRC)/swrast/%.c,$(OBJ_DIR)/swrast_%.o,$(SWRAST_SRCS))
+COMMON_OBJS = $(patsubst $(MESA_SRC)/drivers/common/%.c,$(OBJ_DIR)/drv_%.o,$(COMMON_SRCS))
+PROGRAM_OBJS = $(patsubst $(MESA_SRC)/program/%.c,$(OBJ_DIR)/prog_%.o,\
+               $(filter %.c,$(PROGRAM_SRCS))) \
+               $(patsubst $(MESA_SRC)/program/%.cpp,$(OBJ_DIR)/prog_%.o,\
+               $(filter %.cpp,$(PROGRAM_SRCS)))
+GLSL_OBJS   = $(patsubst $(GLSL_SRC)/%.cpp,$(OBJ_DIR)/glsl_%.o,\
+              $(filter %.cpp,$(GLSL_SRCS))) \
+              $(patsubst $(GLSL_SRC)/%.c,$(OBJ_DIR)/glsl_%.o,\
+              $(filter %.c,$(GLSL_SRCS)))
+MAPI_OBJS   = $(patsubst $(TOP)/src/mapi/glapi/%.c,$(OBJ_DIR)/mapi_%.o,$(MAPI_SRCS))
+
+ALL_OBJS = $(OS2_OBJS) $(MAIN_OBJS) $(MATH_OBJS) $(VBO_OBJS) $(TNL_OBJS) \
+           $(SWSETUP_OBJS) $(SWRAST_OBJS) $(COMMON_OBJS) $(PROGRAM_OBJS) \
+           $(GLSL_OBJS) $(GLCPP_OBJS) $(MAPI_OBJS) $(MAPI_UCUR_OBJ) \
+           $(FF_FRAG_OBJ)
+
+LIB_OUT = $(TOP)/lib/MesaGL7.a
+DLL_OUT = $(TOP)/dll
+
+# ---------------------------------------------------------------------------
+# Rules
+# ---------------------------------------------------------------------------
+
+.PHONY: all static dll clean
+
+all: static
+
+static: $(OBJ_DIR) $(LIB_OUT)
+
+dll: $(OBJ_DIR)
+	gcc -Zomf -Zdll -Zmap=dll/MesaGL7 -o dll/MesaGL7.dll @mesagl.rsp MesaGL7.def -lstdc++ -los2 -lm
+	emximp -o lib/MesaGL7_imp.a MesaGL7_imp.def
+
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
+$(LIB_OUT): $(ALL_OBJS)
+	$(AR) $(ARFLAGS) $@ $^
+
+# OS/2 driver (explicit rules — sources live in the driver subdirectory)
+$(OBJ_DIR)/os2mesa.o: $(OS2_DRIVER)/os2mesa.c $(OS2_DRIVER)/os2mesa.h $(OS2_DRIVER)/os2mesadef.h $(OS2_DRIVER)/os2_config.h
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(OBJ_DIR)/os2mesa_math.o: $(OS2_DRIVER)/os2mesa_math.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+# mesa/main/
+$(OBJ_DIR)/main_%.o: $(MESA_SRC)/main/%.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+# mesa/math/
+$(OBJ_DIR)/math_%.o: $(MESA_SRC)/math/%.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+# mesa/vbo/
+$(OBJ_DIR)/vbo_%.o: $(MESA_SRC)/vbo/%.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+# mesa/tnl/
+$(OBJ_DIR)/tnl_%.o: $(MESA_SRC)/tnl/%.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+# mesa/swrast_setup/
+$(OBJ_DIR)/swsetup_%.o: $(MESA_SRC)/swrast_setup/%.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+# mesa/swrast/
+$(OBJ_DIR)/swrast_%.o: $(MESA_SRC)/swrast/%.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+# mesa/drivers/common/
+$(OBJ_DIR)/drv_%.o: $(MESA_SRC)/drivers/common/%.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+# mesa/program/
+$(OBJ_DIR)/prog_%.o: $(MESA_SRC)/program/%.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+$(OBJ_DIR)/prog_%.o: $(MESA_SRC)/program/%.cpp
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+# src/glsl/
+$(OBJ_DIR)/glsl_%.o: $(GLSL_SRC)/%.cpp
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+$(OBJ_DIR)/glsl_%.o: $(GLSL_SRC)/%.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+# src/mapi/glapi/
+$(OBJ_DIR)/mapi_%.o: $(TOP)/src/mapi/glapi/%.c
+	$(CC) $(CFLAGS) -I$(TOP)/src/mapi -c -o $@ $<
+
+# mesa/main/ff_fragment_shader.cpp (C++ — not matched by MAIN_OBJS .c pattern)
+$(FF_FRAG_OBJ): $(MESA_SRC)/main/ff_fragment_shader.cpp
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+# src/glsl/glcpp/ (subdirectory — not matched by GLSL_OBJS pattern)
+$(OBJ_DIR)/glcpp_%.o: $(GLCPP_SRC)/%.c
+	$(CC) $(CFLAGS) -I$(GLSL_SRC) -c -o $@ $<
+
+# src/mapi/mapi/u_current.c (defines _glapi_Context / _glapi_Dispatch)
+# -DMAPI_MODE_UTIL: skips table.h/mapi_tmp.h (which need MAPI_ABI_HEADER from
+# the full Mesa build system); uses __glapi_noop_table from glapi_entrypoint.o
+$(MAPI_UCUR_OBJ): $(MAPI_UCUR_SRC)
+	$(CC) $(CFLAGS) -I$(TOP)/src/mapi -DMAPI_MODE_UTIL -c -o $@ $<
+
+clean:
+	rm -f $(OBJ_DIR)/*.o
+	rm -f $(LIB_OUT)
+	rm -f $(DLL_OUT)/MesaGL7.dll
+	rm -f $(DLL_OUT)/MesaGL7.map

@@ -1,0 +1,245 @@
+# Makefile.os2glu — Mesa 7.11.2 libGLU for ArcaOS (GCC 9.2 / WLINK)
+#
+# Run from the Mesa-7.11.2 root with:
+#   make -f Makefile.os2glu
+#
+# Outputs (relative to Mesa root):
+#   obj_glu/*.o       — OMF object files
+#   lib/libGLU7.a     — static library
+#   dll/libGLU7.dll   — OS/2 DLL (linked via WLINK response file)
+
+TOP        := .
+SGI        := src/glu/sgi
+OS2_COMPAT := $(TOP)/src/mesa/drivers/os2/os2_compat
+MESA_INC   := $(TOP)/include
+MESA_LIB   := $(TOP)/lib
+DLL_OUT    := $(TOP)/dll
+OBJ        := obj_glu
+
+# ---------------------------------------------------------------------------
+# Compiler flags  (C and C++ share the base flags)
+# ---------------------------------------------------------------------------
+COMMON := -O2 -Wall -fno-builtin-sinf -fno-builtin-cosf -fno-builtin-sin -fno-builtin-cos \
+          -D__OS2__ -DBUILD_GL32 -DLIBRARYBUILD \
+          -D_near= -D_far= -D_cdecl= -D_huge= -D_pascal= \
+          -I$(OS2_COMPAT) \
+          -I$(MESA_INC) \
+          -I$(SGI)/include \
+          -I$(SGI)/libnurbs/interface \
+          -I$(SGI)/libnurbs/internals \
+          -I$(SGI)/libnurbs/nurbtess \
+          -I/usr/include
+
+CFLAGS   := $(COMMON) -Zomf -include limits.h
+CXXFLAGS := $(COMMON) -Zomf -fpermissive
+
+CC  := gcc
+CXX := g++
+
+# ---------------------------------------------------------------------------
+# Source → object lists
+# (Prefix codes: ni = nurbs/interface, nn = nurbs/internals,
+#                nt = nurbs/tessellation, tess = libtess, util = libutil)
+# ---------------------------------------------------------------------------
+
+NI_SRCS := $(SGI)/libnurbs/interface/bezierEval.cc \
+            $(SGI)/libnurbs/interface/bezierPatch.cc \
+            $(SGI)/libnurbs/interface/bezierPatchMesh.cc \
+            $(SGI)/libnurbs/interface/glcurveval.cc \
+            $(SGI)/libnurbs/interface/glinterface.cc \
+            $(SGI)/libnurbs/interface/glrenderer.cc \
+            $(SGI)/libnurbs/interface/glsurfeval.cc \
+            $(SGI)/libnurbs/interface/incurveeval.cc \
+            $(SGI)/libnurbs/interface/insurfeval.cc
+
+NN_SRCS := $(SGI)/libnurbs/internals/arc.cc \
+            $(SGI)/libnurbs/internals/arcsorter.cc \
+            $(SGI)/libnurbs/internals/arctess.cc \
+            $(SGI)/libnurbs/internals/backend.cc \
+            $(SGI)/libnurbs/internals/basiccrveval.cc \
+            $(SGI)/libnurbs/internals/basicsurfeval.cc \
+            $(SGI)/libnurbs/internals/bin.cc \
+            $(SGI)/libnurbs/internals/bufpool.cc \
+            $(SGI)/libnurbs/internals/cachingeval.cc \
+            $(SGI)/libnurbs/internals/ccw.cc \
+            $(SGI)/libnurbs/internals/coveandtiler.cc \
+            $(SGI)/libnurbs/internals/curve.cc \
+            $(SGI)/libnurbs/internals/curvelist.cc \
+            $(SGI)/libnurbs/internals/curvesub.cc \
+            $(SGI)/libnurbs/internals/dataTransform.cc \
+            $(SGI)/libnurbs/internals/displaylist.cc \
+            $(SGI)/libnurbs/internals/flist.cc \
+            $(SGI)/libnurbs/internals/flistsorter.cc \
+            $(SGI)/libnurbs/internals/hull.cc \
+            $(SGI)/libnurbs/internals/intersect.cc \
+            $(SGI)/libnurbs/internals/knotvector.cc \
+            $(SGI)/libnurbs/internals/mapdesc.cc \
+            $(SGI)/libnurbs/internals/mapdescv.cc \
+            $(SGI)/libnurbs/internals/maplist.cc \
+            $(SGI)/libnurbs/internals/mesher.cc \
+            $(SGI)/libnurbs/internals/monotonizer.cc \
+            $(SGI)/libnurbs/internals/monoTriangulationBackend.cc \
+            $(SGI)/libnurbs/internals/mycode.cc \
+            $(SGI)/libnurbs/internals/nurbsinterfac.cc \
+            $(SGI)/libnurbs/internals/nurbstess.cc \
+            $(SGI)/libnurbs/internals/patch.cc \
+            $(SGI)/libnurbs/internals/patchlist.cc \
+            $(SGI)/libnurbs/internals/quilt.cc \
+            $(SGI)/libnurbs/internals/reader.cc \
+            $(SGI)/libnurbs/internals/renderhints.cc \
+            $(SGI)/libnurbs/internals/slicer.cc \
+            $(SGI)/libnurbs/internals/sorter.cc \
+            $(SGI)/libnurbs/internals/splitarcs.cc \
+            $(SGI)/libnurbs/internals/subdivider.cc \
+            $(SGI)/libnurbs/internals/tobezier.cc \
+            $(SGI)/libnurbs/internals/trimline.cc \
+            $(SGI)/libnurbs/internals/trimregion.cc \
+            $(SGI)/libnurbs/internals/trimvertpool.cc \
+            $(SGI)/libnurbs/internals/uarray.cc \
+            $(SGI)/libnurbs/internals/varray.cc
+
+NT_SRCS := $(SGI)/libnurbs/nurbtess/directedLine.cc \
+            $(SGI)/libnurbs/nurbtess/gridWrap.cc \
+            $(SGI)/libnurbs/nurbtess/monoChain.cc \
+            $(SGI)/libnurbs/nurbtess/monoPolyPart.cc \
+            $(SGI)/libnurbs/nurbtess/monoTriangulation.cc \
+            $(SGI)/libnurbs/nurbtess/partitionX.cc \
+            $(SGI)/libnurbs/nurbtess/partitionY.cc \
+            $(SGI)/libnurbs/nurbtess/polyDBG.cc \
+            $(SGI)/libnurbs/nurbtess/polyUtil.cc \
+            $(SGI)/libnurbs/nurbtess/primitiveStream.cc \
+            $(SGI)/libnurbs/nurbtess/quicksort.cc \
+            $(SGI)/libnurbs/nurbtess/rectBlock.cc \
+            $(SGI)/libnurbs/nurbtess/sampleComp.cc \
+            $(SGI)/libnurbs/nurbtess/sampleCompBot.cc \
+            $(SGI)/libnurbs/nurbtess/sampleCompRight.cc \
+            $(SGI)/libnurbs/nurbtess/sampleCompTop.cc \
+            $(SGI)/libnurbs/nurbtess/sampleMonoPoly.cc \
+            $(SGI)/libnurbs/nurbtess/sampledLine.cc \
+            $(SGI)/libnurbs/nurbtess/searchTree.cc
+
+TESS_SRCS := $(SGI)/libtess/dict.c \
+              $(SGI)/libtess/geom.c \
+              $(SGI)/libtess/memalloc.c \
+              $(SGI)/libtess/mesh.c \
+              $(SGI)/libtess/normal.c \
+              $(SGI)/libtess/render.c \
+              $(SGI)/libtess/sweep.c \
+              $(SGI)/libtess/tess.c \
+              $(SGI)/libtess/tessmono.c
+
+# priorityq-heap.c has a hyphen — handled with an explicit rule below
+TESS_HEAP_SRC := $(SGI)/libtess/priorityq-heap.c
+TESS_PQ_SRC   := $(SGI)/libtess/priorityq.c
+
+UTIL_SRCS := $(SGI)/libutil/error.c \
+              $(SGI)/libutil/glue.c \
+              $(SGI)/libutil/mipmap.c \
+              $(SGI)/libutil/project.c \
+              $(SGI)/libutil/quad.c \
+              $(SGI)/libutil/registry.c
+
+# Object files  (rename hyphen → underscore for the one awkward file)
+NI_OBJS   := $(patsubst $(SGI)/libnurbs/interface/%.cc,$(OBJ)/ni_%.o,$(NI_SRCS))
+NN_OBJS   := $(patsubst $(SGI)/libnurbs/internals/%.cc,$(OBJ)/nn_%.o,$(NN_SRCS))
+NT_OBJS   := $(patsubst $(SGI)/libnurbs/nurbtess/%.cc,$(OBJ)/nt_%.o,$(NT_SRCS))
+TESS_OBJS := $(patsubst $(SGI)/libtess/%.c,$(OBJ)/tess_%.o,$(TESS_SRCS))
+UTIL_OBJS := $(patsubst $(SGI)/libutil/%.c,$(OBJ)/util_%.o,$(UTIL_SRCS))
+
+TESS_HEAP_OBJ := $(OBJ)/tess_priorityq_heap.o
+TESS_PQ_OBJ   := $(OBJ)/tess_priorityq.o
+DUMMY_OBJ     := $(OBJ)/dummy.o
+
+ALL_OBJS := $(NI_OBJS) $(NN_OBJS) $(NT_OBJS) \
+            $(TESS_OBJS) $(TESS_HEAP_OBJ) $(TESS_PQ_OBJ) \
+            $(UTIL_OBJS) $(DUMMY_OBJ)
+
+# ---------------------------------------------------------------------------
+# Top-level targets
+# ---------------------------------------------------------------------------
+.PHONY: all static dll clean clean_obj
+
+all: static dll
+
+static: $(MESA_LIB)/libGLU7.a
+
+dll: $(DLL_OUT)/libGLU7.dll
+
+# ---------------------------------------------------------------------------
+# Static library
+# ---------------------------------------------------------------------------
+$(MESA_LIB)/libGLU7.a: $(ALL_OBJS)
+	ar rcs $@ $^
+	@echo Static library: $@
+
+# ---------------------------------------------------------------------------
+# DLL via gcc -Zdll (libc/libm/PM imports come from -los2 -lm; the object
+# list is in glu.rsp, exports in libGLU7.def; needs lib/MesaGL7_imp.a first)
+# ---------------------------------------------------------------------------
+$(DLL_OUT)/libGLU7.dll: $(ALL_OBJS) libGLU7.def glu.rsp
+	gcc -Zomf -Zdll -Zmap=dll/libGLU7 -o dll/libGLU7.dll @glu.rsp libGLU7.def lib/MesaGL7_imp.a -lstdc++ -los2 -lm
+	emximp -o lib/libGLU7_imp.a libGLU7_imp.def
+	@echo DLL: $@
+
+# (the dll/ directory is created by compile_glu.cmd / build_dlls.cmd)
+
+# ---------------------------------------------------------------------------
+# Compile rules — nurbs/interface
+# ---------------------------------------------------------------------------
+$(OBJ)/ni_%.o: $(SGI)/libnurbs/interface/%.cc | $(OBJ)
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+# ---------------------------------------------------------------------------
+# Compile rules — nurbs/internals
+# ---------------------------------------------------------------------------
+$(OBJ)/nn_%.o: $(SGI)/libnurbs/internals/%.cc | $(OBJ)
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+# ---------------------------------------------------------------------------
+# Compile rules — nurbs/nurbtess
+# ---------------------------------------------------------------------------
+$(OBJ)/nt_%.o: $(SGI)/libnurbs/nurbtess/%.cc | $(OBJ)
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+# ---------------------------------------------------------------------------
+# Compile rules — libtess (C, except the hyphen-named file)
+# ---------------------------------------------------------------------------
+$(OBJ)/tess_%.o: $(SGI)/libtess/%.c | $(OBJ)
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+# Explicit rule for the hyphen-named file
+$(TESS_HEAP_OBJ): $(TESS_HEAP_SRC) | $(OBJ)
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(TESS_PQ_OBJ): $(TESS_PQ_SRC) | $(OBJ)
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+# ---------------------------------------------------------------------------
+# Compile rules — libutil (C)
+# ---------------------------------------------------------------------------
+$(OBJ)/util_%.o: $(SGI)/libutil/%.c | $(OBJ)
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+# ---------------------------------------------------------------------------
+# dummy.cc
+# ---------------------------------------------------------------------------
+$(DUMMY_OBJ): $(SGI)/dummy.cc | $(OBJ)
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+# ---------------------------------------------------------------------------
+# Create output directory
+# ---------------------------------------------------------------------------
+$(OBJ):
+	mkdir -p $(OBJ)
+
+# ---------------------------------------------------------------------------
+# Clean
+# ---------------------------------------------------------------------------
+clean:
+	rm -f $(OBJ)/*.o
+	rm -f $(MESA_LIB)/libGLU7.a
+	rm -f $(DLL_OUT)/libGLU7.dll
+	rm -f $(DLL_OUT)/libGLU7.map
+
+clean_obj:
+	rm -f $(OBJ)/*.o

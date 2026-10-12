@@ -1,0 +1,46 @@
+# Mesa 7.11.2 build configuration for OS/2 (ArcaOS) with GCC 9.2
+# Used by the top-level GNU make system: make linux-x11 → make os2
+
+include $(TOP)/configs/default
+
+CONFIG_NAME = os2
+
+# Toolchain
+CC  = gcc
+CXX = g++
+AS  = as
+
+# Flags
+# -Zomf      : produce OMF object files (required for LINK386/WLINK on OS/2)
+# -DOS2       : define OS/2 target
+# -DBUILD_GL32: some headers key off this
+DEFINES = -D__OS2__ -DOS2 -DBUILD_GL32 -DPTHREADS
+CFLAGS  = -O2 -g -Wall -Wmissing-prototypes -Wdeclaration-after-statement \
+          $(DEFINES)
+CXXFLAGS = -O2 -g -Wall $(DEFINES)
+
+# OS/2 does not have X11
+HAVE_X11 = no
+
+# Build only the classic Mesa (no Gallium for this config)
+# Shared library suffix on OS/2
+SHARED_LIBRARY_EXTENSION = dll
+
+# Mesa core source directories
+MESA_ASM_SOURCES =
+
+# Do not build DRI drivers on OS/2
+DRI_DIRS =
+
+# Driver(s) to build
+DRIVER_DIRS = os2
+
+# No GLX on OS/2 (we provide our own wgl/pm shim)
+GLX_EXTENSIONS =
+HAVE_GLX = no
+
+# Build GLU
+GLU_DIRS = sgi
+
+# Do not build X11-dependent GLUT
+GLUT_DIRS =

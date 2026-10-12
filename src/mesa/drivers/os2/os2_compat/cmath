@@ -1,0 +1,229 @@
+/*
+ * os2_compat/cmath — C99 math declaration shim for ArcaOS GCC 9
+ *
+ * GCC 9's real <cmath> uses "using ::trunc", "using ::round" etc. to pull
+ * C99 math functions into std::.  The EMX libc predates C99 and doesn't
+ * declare those functions in /usr/include/math.h, so <cmath> fails.
+ *
+ * This file is found first via -I$(OS2_COMPAT) whenever any C++ header
+ * does #include <cmath>.  We declare the missing functions in the global
+ * namespace BEFORE deferring to the real <cmath> with #include_next, so
+ * its "using ::" statements can resolve.
+ *
+ * Only functions that EMX math.h does NOT already declare are listed here.
+ * hypot/hypotl are deliberately omitted — EMX has them with C++ linkage
+ * and redeclaring them with extern "C" causes a linkage-class conflict.
+ *
+ * Implementations for functions the EMX library might not supply are in
+ * os2mesa_math.c (compiled and archived into MesaGL7.a).
+ */
+
+#ifndef _OS2_COMPAT_CMATH_
+#define _OS2_COMPAT_CMATH_
+
+/* Note: double_t and float_t are defined by EMX's math.h (included
+ * via os2_compat/math.h extern "C" block) — do not redefine here. */
+
+extern "C" {
+
+/* --- Basic float/long-double variants of C89 math functions ---
+ * EMX's pre-C99 math.h only has the double versions; C99 added
+ * these float (f-suffix) and long-double (l-suffix) forms. */
+
+float       fabsf(float);
+long double fabsl(long double);
+
+float       floorf(float);
+long double floorl(long double);
+float       ceilf(float);
+long double ceill(long double);
+
+float       sqrtf(float);
+long double sqrtl(long double);
+float       powf(float, float);
+long double powl(long double, long double);
+
+float       expf(float);
+long double expl(long double);
+float       logf(float);
+long double logl(long double);
+float       log10f(float);
+long double log10l(long double);
+
+float       sinf(float);
+long double sinl(long double);
+float       cosf(float);
+long double cosl(long double);
+float       tanf(float);
+long double tanl(long double);
+float       asinf(float);
+long double asinl(long double);
+float       acosf(float);
+long double acosl(long double);
+float       atanf(float);
+long double atanl(long double);
+float       atan2f(float, float);
+long double atan2l(long double, long double);
+
+float       sinhf(float);
+long double sinhl(long double);
+float       coshf(float);
+long double coshl(long double);
+float       tanhf(float);
+long double tanhl(long double);
+
+float       fmodf(float, float);
+long double fmodl(long double, long double);
+float       ldexpf(float, int);
+long double ldexpl(long double, int);
+
+/* hypotf — EMX has hypot and hypotl but not the float variant */
+float hypotf(float, float);
+
+/* nan/nanf/nanl — C99 NaN constructors */
+double      nan(const char *);
+float       nanf(const char *);
+long double nanl(const char *);
+
+/* --- Rounding --- */
+double      trunc(double);
+float       truncf(float);
+long double truncl(long double);
+
+double      round(double);
+float       roundf(float);
+long double roundl(long double);
+
+double      rint(double);
+float       rintf(float);
+long double rintl(long double);
+
+double      nearbyint(double);
+float       nearbyintf(float);
+long double nearbyintl(long double);
+
+long int    lround(double);
+long int    lroundf(float);
+long int    lroundl(long double);
+long long   llround(double);
+long long   llroundf(float);
+long long   llroundl(long double);
+
+long int    lrint(double);
+long int    lrintf(float);
+long int    lrintl(long double);
+long long   llrint(double);
+long long   llrintf(float);
+long long   llrintl(long double);
+
+/* --- Float manipulation --- */
+double      scalbn(double, int);
+float       scalbnf(float, int);
+long double scalbnl(long double, int);
+
+double      scalbln(double, long);
+float       scalblnf(float, long);
+long double scalblnl(long double, long);
+
+double      logb(double);
+float       logbf(float);
+long double logbl(long double);
+
+int         ilogb(double);
+int         ilogbf(float);
+int         ilogbl(long double);
+
+double      nextafter(double, double);
+float       nextafterf(float, float);
+long double nextafterl(long double, long double);
+
+double      nexttoward(double, long double);
+float       nexttowardf(float, long double);
+long double nexttowardl(long double, long double);
+
+double      copysign(double, double);
+float       copysignf(float, float);
+long double copysignl(long double, long double);
+
+/* --- Min / max / dim / fma --- */
+double      fma(double, double, double);
+float       fmaf(float, float, float);
+long double fmal(long double, long double, long double);
+
+double      fmax(double, double);
+float       fmaxf(float, float);
+long double fmaxl(long double, long double);
+
+double      fmin(double, double);
+float       fminf(float, float);
+long double fminl(long double, long double);
+
+double      fdim(double, double);
+float       fdimf(float, float);
+long double fdiml(long double, long double);
+
+/* --- Remainder --- */
+double      remainder(double, double);
+float       remainderf(float, float);
+long double remainderl(long double, long double);
+
+double      remquo(double, double, int *);
+float       remquof(float, float, int *);
+long double remquol(long double, long double, int *);
+
+/* --- Analytic / transcendental --- */
+double      exp2(double);
+float       exp2f(float);
+long double exp2l(long double);
+
+double      expm1(double);
+float       expm1f(float);
+long double expm1l(long double);
+
+double      log2(double);
+float       log2f(float);
+long double log2l(long double);
+
+double      log1p(double);
+float       log1pf(float);
+long double log1pl(long double);
+
+double      cbrt(double);
+float       cbrtf(float);
+long double cbrtl(long double);
+
+double      erf(double);
+float       erff(float);
+long double erfl(long double);
+
+double      erfc(double);
+float       erfcf(float);
+long double erfcl(long double);
+
+double      tgamma(double);
+float       tgammaf(float);
+long double tgammal(long double);
+
+double      lgamma(double);
+float       lgammaf(float);
+long double lgammal(long double);
+
+double      acosh(double);
+float       acoshf(float);
+long double acoshl(long double);
+
+double      asinh(double);
+float       asinhf(float);
+long double asinhl(long double);
+
+double      atanh(double);
+float       atanhf(float);
+long double atanhl(long double);
+
+} /* extern "C" */
+
+/* Defer to the real <cmath> — its "using ::" now resolves against the
+ * declarations above. */
+#include_next <cmath>
+
+#endif /* _OS2_COMPAT_CMATH_ */

@@ -1,0 +1,102 @@
+# Makefile.os2glut -- Mesa 7.11.2 GLUT for ArcaOS
+# Run from the Mesa root directory.
+#
+# Portable font/shape/util files are compiled from src/glut/glx/ but
+# with -include src/glut/os2/glutint.h so they pick up the OS/2-specific
+# header instead of the X11 one (GCC searches the source directory first).
+# glut_ext.c is compiled with -include glutint_ext.h instead, because it
+# needs <GL/glut.h> for GLUTproc and all glutXxx declarations.
+# The platform implementation is in src/glut/os2/os2_glut.c.
+
+TOP      := .
+GLX      := src/glut/glx
+OS2G     := src/glut/os2
+OBJ      := obj_glut
+LIB_OUT  := $(TOP)/lib/libGLUT7.a
+DLL_OUT  := $(TOP)/dll
+
+CC  := gcc
+AR  := ar
+
+# Base flags used by most portable files and the OS/2 platform file.
+# Uses glutint.h which does NOT include <GL/glut.h> (protects font-data trick).
+CFLAGS := -Wall -O2 -fno-builtin-sinf -fno-builtin-cosf -fno-builtin-sin -fno-builtin-cos -Zomf \
+          -include $(OS2G)/glutint.h \
+          -I$(TOP)/include \
+          -I$(TOP)/src/mesa/drivers/os2 \
+          -I$(TOP)/src/mesa/drivers/os2/os2_compat
+
+# glut_ext.c needs the full GLUT API surface (GLUTproc + all glutXxx decls).
+# glutint_ext.h = glutint.h + <GL/glut.h>.
+CFLAGS_EXT := -Wall -O2 -fno-builtin-sinf -fno-builtin-cosf -fno-builtin-sin -fno-builtin-cos -Zomf \
+              -include $(OS2G)/glutint_ext.h \
+              -I$(TOP)/include \
+              -I$(TOP)/src/mesa/drivers/os2 \
+              -I$(TOP)/src/mesa/drivers/os2/os2_compat
+
+# ── Portable source files (from glx/, compiled with CFLAGS) ──────────
+
+PORT_SRCS := \
+  $(GLX)/glut_8x13.c    \
+  $(GLX)/glut_9x15.c    \
+  $(GLX)/glut_bitmap.c  \
+  $(GLX)/glut_bwidth.c  \
+  $(GLX)/glut_hel10.c   \
+  $(GLX)/glut_hel12.c   \
+  $(GLX)/glut_hel18.c   \
+  $(GLX)/glut_mesa.c    \
+  $(GLX)/glut_mroman.c  \
+  $(GLX)/glut_roman.c   \
+  $(GLX)/glut_shapes.c  \
+  $(GLX)/glut_stroke.c  \
+  $(GLX)/glut_swidth.c  \
+  $(GLX)/glut_teapot.c  \
+  $(GLX)/glut_tr10.c    \
+  $(GLX)/glut_tr24.c    \
+  $(GLX)/glut_util.c
+
+PORT_OBJS := $(patsubst $(GLX)/%.c,$(OBJ)/p_%.o,$(PORT_SRCS))
+
+# glut_ext.c gets its own object and compile rule (CFLAGS_EXT)
+EXT_OBJ := $(OBJ)/p_glut_ext.o
+
+# ── OS/2 platform file ────────────────────────────────────────────────
+
+OS2_OBJ := $(OBJ)/os2glut.o
+
+ALL_OBJS := $(PORT_OBJS) $(EXT_OBJ) $(OS2_OBJ)
+
+# ── Targets ───────────────────────────────────────────────────────────
+
+.PHONY: all static dll clean
+
+all: static
+
+static: $(OBJ) $(LIB_OUT)
+
+dll: $(OBJ) $(LIB_OUT)
+	gcc -Zomf -Zdll -Zmap=dll/libGLUT7 -o dll/libGLUT7.dll @glut.rsp libGLUT7.def lib/libGLU7_imp.a lib/MesaGL7_imp.a -lstdc++ -los2 -lm
+
+$(OBJ):
+	mkdir -p $(OBJ)
+
+$(LIB_OUT): $(ALL_OBJS)
+	$(AR) rcs $@ $^
+
+# Portable glx/ files → obj_glut/p_<name>.o  (base CFLAGS, no glut.h)
+$(OBJ)/p_%.o: $(GLX)/%.c | $(OBJ)
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+# glut_ext.c: force-include glutint_ext.h so GLUTproc + API decls are visible
+$(EXT_OBJ): $(GLX)/glut_ext.c | $(OBJ)
+	$(CC) $(CFLAGS_EXT) -c -o $@ $<
+
+# OS/2 platform file
+$(OS2_OBJ): $(OS2G)/os2_glut.c | $(OBJ)
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+clean:
+	rm -f $(OBJ)/*.o
+	rm -f $(LIB_OUT)
+	rm -f $(DLL_OUT)/libGLUT7.dll
+	rm -f $(DLL_OUT)/libGLUT7.map
