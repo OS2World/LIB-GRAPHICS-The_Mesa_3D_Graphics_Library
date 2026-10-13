@@ -261,3 +261,4 @@ obj_os2/mapi_glapi_entrypoint.o
 obj_os2/mapi_glapi_getproc.o
 obj_os2/mapi_glapi_nop.o
 obj_os2/mapi_u_current.o
+obj_os2/osmesa.o

@@ -14,18 +14,21 @@ path into a PM window.
 
 | DLL | Content |
 |---|---|
-| `MesaGL7.dll`  | OpenGL 2.1 (Mesa core, software rasteriser, OS/2 PM driver) |
+| `MesaGL7.dll`  | OpenGL 2.1 (Mesa core, software rasteriser, OS/2 PM driver) and **OSMesa** (off-screen rendering into memory) |
 | `libGLU7.dll`  | GLU (SGI GLU, with NURBS) |
 | `libGLUT7.dll` | GLUT for Presentation Manager (single window) |
 
 Plus GCC import libraries (`lib/*_imp.a`), the headers (`gl.h`, `glu.h`, `glut.h`,
-`glext.h`) and four demo programs with source:
+`glext.h`) and six demo programs with source:
 
 * **glutcube** - smooth-shaded rotating cube
 * **gears** - the classic three gears (lighting, display lists)
 * **shapes** - the eight GLUT solids and wireframes, lighting toggle, mouse drag,
   bitmap-font overlay
 * **texture** - texture mapping with mipmaps, filtering modes and alpha blending
+* **osmesa_test** - headless OSMesa smoke test (no window; checks the rendered pixels)
+* **osdive** - OpenGL rendered into memory with OSMesa and shown with **DIVE**, scaled
+  to the window
 
 Programs link to the DLLs at load time, so they appear as normal imports in PMDLL.
 
@@ -35,8 +38,8 @@ Programs link to the DLLs at load time, so they appear as normal imports in PMDL
 
 Prebuilt packages are on the [Releases](../../releases) page:
 
-* `Mesa-7.11.2-os2-1.0-bin.zip` - DLLs, import libraries, headers, demo executables
-* `Mesa-7.11.2-os2-1.0-src.zip` - cleaned source tree
+* `Mesa-7.11.2-os2-1.1-bin.zip` - DLLs, import libraries, headers, demo executables
+* `Mesa-7.11.2-os2-1.1-src.zip` - cleaned source tree
 
 ## Quick start
 
@@ -60,6 +63,22 @@ gcc -Zomf -o myprog.exe myprog.def myprog.o \
 > Always compile with the `-fno-builtin-sin/cos` flags above. All Mesa libraries in
 > this repository are already built that way.
 
+## OSMesa + DIVE (render to memory, blit fast)
+
+Many OpenGL ports (Quake-style engines, voxel games, ...) only need a way to get OpenGL
+pixels into memory. `MesaGL7.dll` includes **OSMesa**, which renders into a buffer you
+provide, and the `osdive` demo shows the full recipe: render with OSMesa into a
+32-bit buffer and let DIVE blit it (clipped, and scaled to the window size) to a PM
+window. The pixel formats match without conversion (`OSMESA_BGRA` ->
+`FOURCC_BGR4`). See [README.os2.md](README.os2.md#osmesa-and-dive) for the
+step-by-step description.
+
+```c
+OSMesaContext ctx = OSMesaCreateContextExt(OSMESA_BGRA, 16, 0, 0, NULL);
+OSMesaMakeCurrent(ctx, buffer, GL_UNSIGNED_BYTE, width, height);
+OSMesaPixelStore(OSMESA_Y_UP, 0);          /* top-down rows, as DIVE expects */
+/* ... OpenGL calls ... glFinish(); then DiveBlitImage(...) */
+```
 ## Building from source
 
 On ArcaOS with `gcc`/`g++` 9.x, GNU `make`, `binutils` (`emximp`, `emxomfld`) and the
@@ -78,12 +97,12 @@ flags, a troubleshooting table and notes on building in a VM over ssh.
 
 ## Status
 
-This is release 1.0 and still young:
+This is release 1.1 and still young:
 
 * Tested on **ArcaOS 5.1.1 in a VirtualBox VM** (32-bit colour) only - real hardware
   reports are very welcome.
 * **Software rendering**; roughly 10 ms of CPU per frame for a 400x400 window in the
-  test VM. No DIVE or hardware acceleration.
+  test VM. No hardware acceleration. For DIVE output use OSMesa (see below).
 * GLUT supports **one window**; menus, overlays, game mode and video resize are stubs.
   Idle-driven animation is capped at 30 fps (`GLUT_FPS` environment variable).
 * GLSL and the usual Mesa extensions are part of the build but **untested**.

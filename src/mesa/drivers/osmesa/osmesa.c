@@ -35,6 +35,23 @@
 
 #include "main/glheader.h"
 #include "GL/osmesa.h"
+
+#ifdef __OS2__
+/* OS/2 starts threads with the x87 control word at 0x0362 (invalid-operation,
+ * divide-by-zero, overflow and underflow exceptions unmasked).  Mesa and libm
+ * assume the C/IEEE default (all masked); a pending exception otherwise raises
+ * SIGFPE inside libc.  GLUT-based programs get this reset in glutInit(); do it
+ * here as well for OSMesa users, who bypass GLUT. */
+static void os2_reset_fpu(void)
+{
+   unsigned int mxcsr = 0x1F80;
+   __asm__ volatile ("fninit");
+   __asm__ volatile ("ldmxcsr %0" : : "m"(mxcsr));
+}
+#else
+#define os2_reset_fpu() ((void)0)
+#endif
+
 #include "main/context.h"
 #include "main/extensions.h"
 #include "main/formats.h"
@@ -1047,6 +1064,7 @@ OSMesaCreateContextExt( GLenum format, GLint depthBits, GLint stencilBits,
    GLint rind, gind, bind, aind;
    GLint redBits = 0, greenBits = 0, blueBits = 0, alphaBits =0;
 
+   os2_reset_fpu();
    rind = gind = bind = aind = 0;
    if (format==OSMESA_RGBA) {
       redBits = CHAN_BITS;
@@ -1278,6 +1296,7 @@ GLAPI GLboolean GLAPIENTRY
 OSMesaMakeCurrent( OSMesaContext osmesa, void *buffer, GLenum type,
                    GLsizei width, GLsizei height )
 {
+   os2_reset_fpu();
    if (!osmesa || !buffer ||
        width < 1 || height < 1 ||
        width > MAX_WIDTH || height > MAX_HEIGHT) {

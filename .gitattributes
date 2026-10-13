@@ -1,0 +1,10 @@
+# OS/2 command files must keep CRLF line endings (REXX .cmd files fail with LF only)
+*.cmd text eol=crlf
+*.rsp text eol=crlf
+
+# binaries
+*.png binary
+*.zip binary
+*.dll binary
+*.exe binary
+*.a binary

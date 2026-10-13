@@ -24,5 +24,15 @@ gcc -Wall -O2 -fno-builtin-sinf -fno-builtin-cosf -fno-builtin-sin -fno-builtin-
 gcc -Zomf -o texture\texture.exe texture\texture.def texture\texture.o %IMPLIBS% -lm 2>&1 | tee -a build_demos.log
 if exist texture\texture.exe ( echo built: texture\texture.exe >> build_demos.log ) else ( echo FAILED: texture >> build_demos.log )
 copy %MESA_ROOT%dll\*.dll texture\ > nul
+echo === osmesa === >> build_demos.log
+gcc -Wall -O2 -fno-builtin-sinf -fno-builtin-cosf -fno-builtin-sin -fno-builtin-cos -Zomf -c osmesa\osmesa_test.c -o osmesa\osmesa_test.o -I%MESA_ROOT%include 2>&1 | tee -a build_demos.log
+gcc -Zomf -o osmesa\osmesa_test.exe osmesa\osmesa_test.o %IMPLIBS% -lm 2>&1 | tee -a build_demos.log
+if exist osmesa\osmesa_test.exe ( echo built: osmesa\osmesa_test.exe >> build_demos.log ) else ( echo FAILED: osmesa >> build_demos.log )
+copy %MESA_ROOT%dll\*.dll osmesa\ > nul
+echo === osdive === >> build_demos.log
+gcc -Wall -O2 -fno-builtin-sinf -fno-builtin-cosf -fno-builtin-sin -fno-builtin-cos -Zomf -c osdive\osdive.c -o osdive\osdive.o -I%MESA_ROOT%include 2>&1 | tee -a build_demos.log
+gcc -Zomf -o osdive\osdive.exe osdive\osdive.def osdive\osdive.o %IMPLIBS% -L%UNIXROOT%/os2tk45/lib -lmmpm2 -lm 2>&1 | tee -a build_demos.log
+if exist osdive\osdive.exe ( echo built: osdive\osdive.exe >> build_demos.log ) else ( echo FAILED: osdive >> build_demos.log )
+copy %MESA_ROOT%dll\*.dll osdive\ > nul
 echo Done >> build_demos.log
 echo Log: build_demos.log

@@ -1,0 +1,17 @@
+# build output (rebuild with build_dlls.cmd / demos\build_demos.cmd)
+obj_os2/
+obj_glu/
+obj_glut/
+dll/
+lib/
+*.o
+*.map
+*.log
+
+# demo build products (the sources stay)
+demos/**/*.exe
+demos/**/*.dll
+
+# scratch
+*.tmp
+__pycache__/

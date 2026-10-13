@@ -17,6 +17,7 @@ GLSL_SRC    = $(TOP)/src/glsl
 INCLUDE     = $(TOP)/include
 OS2_DRIVER  = $(MESA_SRC)/drivers/os2
 OS2_COMPAT  = $(OS2_DRIVER)/os2_compat
+OSMESA_DRIVER = $(MESA_SRC)/drivers/osmesa
 
 CC   = gcc
 CXX  = g++
@@ -46,7 +47,8 @@ CXXFLAGS = $(CFLAGS) -fpermissive
 # OS/2 platform driver
 OS2_SRCS = \
     $(OS2_DRIVER)/os2mesa.c \
-    $(OS2_DRIVER)/os2mesa_math.c
+    $(OS2_DRIVER)/os2mesa_math.c \
+    $(OSMESA_DRIVER)/osmesa.c
 
 # Mesa core — main/
 MAIN_SRCS = \
@@ -355,7 +357,7 @@ GLCPP_OBJS = $(patsubst $(GLCPP_SRC)/%.c,$(OBJ_DIR)/glcpp_%.o,$(GLCPP_SRCS))
 
 OBJ_DIR = obj_os2
 
-OS2_OBJS    = $(OBJ_DIR)/os2mesa.o $(OBJ_DIR)/os2mesa_math.o
+OS2_OBJS    = $(OBJ_DIR)/os2mesa.o $(OBJ_DIR)/os2mesa_math.o $(OBJ_DIR)/osmesa.o
 MAIN_OBJS   = $(patsubst $(MESA_SRC)/main/%.c,$(OBJ_DIR)/main_%.o,$(MAIN_SRCS))
 MATH_OBJS   = $(patsubst $(MESA_SRC)/math/%.c,$(OBJ_DIR)/math_%.o,$(MATH_SRCS))
 VBO_OBJS    = $(patsubst $(MESA_SRC)/vbo/%.c,$(OBJ_DIR)/vbo_%.o,$(VBO_SRCS))
@@ -406,6 +408,10 @@ $(OBJ_DIR)/os2mesa.o: $(OS2_DRIVER)/os2mesa.c $(OS2_DRIVER)/os2mesa.h $(OS2_DRIV
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(OBJ_DIR)/os2mesa_math.o: $(OS2_DRIVER)/os2mesa_math.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+# OSMesa: off-screen rendering into a caller-supplied memory buffer
+$(OBJ_DIR)/osmesa.o: $(OSMESA_DRIVER)/osmesa.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 # mesa/main/

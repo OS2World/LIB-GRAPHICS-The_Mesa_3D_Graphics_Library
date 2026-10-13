@@ -586,3 +586,14 @@ EXPORTS
     _WMesaMakeCurrent=WMesaMakeCurrent
     _WMesaSwapBuffers=WMesaSwapBuffers
     _WMesaShareLists=WMesaShareLists
+    _OSMesaCreateContext=OSMesaCreateContext
+    _OSMesaCreateContextExt=OSMesaCreateContextExt
+    _OSMesaDestroyContext=OSMesaDestroyContext
+    _OSMesaMakeCurrent=OSMesaMakeCurrent
+    _OSMesaGetCurrentContext=OSMesaGetCurrentContext
+    _OSMesaPixelStore=OSMesaPixelStore
+    _OSMesaGetIntegerv=OSMesaGetIntegerv
+    _OSMesaGetDepthBuffer=OSMesaGetDepthBuffer
+    _OSMesaGetColorBuffer=OSMesaGetColorBuffer
+    _OSMesaGetProcAddress=OSMesaGetProcAddress
+    _OSMesaColorClamp=OSMesaColorClamp

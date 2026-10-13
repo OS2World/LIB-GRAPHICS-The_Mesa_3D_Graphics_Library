@@ -1,5 +1,5 @@
 LIBRARY MesaGL7 INITINSTANCE TERMINSTANCE
-DESCRIPTION 'Mesa 7.11.2 for ArcaOS - OS/2 port 1.0 (2026-10) OpenGL'
+DESCRIPTION 'Mesa 7.11.2 for ArcaOS - OS/2 port 1.1 (2026-10) OpenGL'
 DATA MULTIPLE NONSHARED
 EXPORTS
     glAccum=_glAccum
@@ -588,3 +588,14 @@ EXPORTS
     WMesaMakeCurrent=_WMesaMakeCurrent
     WMesaSwapBuffers=_WMesaSwapBuffers
     WMesaShareLists=_WMesaShareLists
+    OSMesaCreateContext=_OSMesaCreateContext
+    OSMesaCreateContextExt=_OSMesaCreateContextExt
+    OSMesaDestroyContext=_OSMesaDestroyContext
+    OSMesaMakeCurrent=_OSMesaMakeCurrent
+    OSMesaGetCurrentContext=_OSMesaGetCurrentContext
+    OSMesaPixelStore=_OSMesaPixelStore
+    OSMesaGetIntegerv=_OSMesaGetIntegerv
+    OSMesaGetDepthBuffer=_OSMesaGetDepthBuffer
+    OSMesaGetColorBuffer=_OSMesaGetColorBuffer
+    OSMesaGetProcAddress=_OSMesaGetProcAddress
+    OSMesaColorClamp=_OSMesaColorClamp
